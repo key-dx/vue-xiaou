@@ -13,9 +13,12 @@ export default new Router({
       component: () => import('../components/pages/index'),
       meta: { selected: '/' },
       children: [
-        { path: 'user', component: () => import('../components/pages/user'), meta: { selected: '/user' } },
         { path: 'menu', component: () => import('../components/pages/menu'), meta: { selected: '/menu' } },
-        { path: 'menu/add', component: () => import('../components/pages/addmenu'), meta: { selected: '/menu' } }
+        { path: 'menu/add', component: () => import('../components/pages/addmenu'), meta: { selected: '/menu' } },
+        { path: 'menu/:id', component: () => import('../components/pages/addmenu'), meta: { selected: '/menu' } },
+        { path: 'role', component: () => import('../components/pages/role'), meta: { selected: '/role' } },
+        { path: 'role/add', component: () => import('../components/pages/addrole'), meta: { selected: '/role' } },
+        { path: 'role/:id', component: () => import('../components/pages/addrole'), meta: { selected: '/role' } },
       ]
     }
   ]

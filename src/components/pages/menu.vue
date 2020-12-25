@@ -9,7 +9,15 @@
         >添加</el-button
       >
     </el-row>
-    <el-table :data="menuData" style="width: 100%" stripe border>
+    <el-table
+      :data="menuData"
+      style="width: 100%"
+      stripe
+      border
+      row-key="id"
+      :tree-props="{ children: 'children' }"
+    >
+      <el-table-column prop="id" label="菜单编号" width="80"> </el-table-column>
       <el-table-column prop="title" label="菜单名称" width="180">
       </el-table-column>
       <el-table-column prop="type" label="类型" width="180">
@@ -37,8 +45,12 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="item">
-          <el-button type="primary" @click="edit(item)">编辑</el-button>
-          <el-button type="danger" @click="del(item.$index)">删除</el-button>
+          <el-button
+            type="primary"
+            @click="$router.push('/menu/' + item.row.id )"
+            >编辑</el-button
+          >
+          <el-button type="danger" @click="del(item.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -52,23 +64,43 @@ export default {
   computed: {
     // ...mapState(["menuData"])
   },
-  data(){
+  data() {
     return {
-      menuData:[]
-    }
+      menuData: []
+    };
   },
   methods: {
-    edit(n) {
-      console.log(n);
-    },
-    del(n) {
-      this.menuData.splice(n, 1);
+    del(id) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          // 删除菜单数据
+          axios.post("/api/menudelete", { id }).then(res => {
+            if (res.data.code == 200) {
+              this.menuData = res.data.list;
+            }
+          });
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   mounted() {
-    axios.get("/api/menulist").then(res => {
-      if(res.data.code){
-        this.menuData = res.data.list
+    // 页面挂载完成 获取数据
+    axios.get("/api/menulist?istree=1").then(res => {
+      if (res.data.code == 200) {
+        this.menuData = res.data.list;
       }
     });
   }

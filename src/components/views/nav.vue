@@ -8,43 +8,30 @@
     unique-opened
     router
   >
-    <!-- <el-submenu index="/menu">
-      <template v-for="(item, index) in menuData">
-        <template slot="title" v-if="item.type == 1">
-          <div :key="index">
-            <i :class="item.icon"></i>
-            <span>{{ item.name }}</span>
-          </div>
-        </template>
-        <template v-else>
-          <el-menu-item :key="index" :index="item.address">{{
-            item.title
-          }}</el-menu-item>
-        </template>
-      </template>
-    </el-submenu> -->
-     <el-submenu index="/menu">
+    <el-menu-item index="/">
+      <i class="el-icon-menu"></i>
+      <span>首页</span>
+    </el-menu-item>
+    <el-submenu
+      v-for="menuitem of menuArr"
+      :key="menuitem.id"
+      :index="menuitem.icon"
+    >
       <template slot="title">
-        <i class="el-icon-setting"></i>
-        <span>系统设置</span>
+        <i :class="menuitem.icon"></i>
+        <span>{{ menuitem.title }}</span>
       </template>
-      <el-menu-item index="/menu">菜单管理</el-menu-item>
-      <el-menu-item index="/user">角色管理</el-menu-item>
-      <el-menu-item index="">管理员管理</el-menu-item>
-    </el-submenu>
-    <el-submenu index="3">
-      <template slot="title">
-        <i class="el-icon-s-goods"></i>
-        <span>商城管理</span>
-      </template>
-      <el-menu-item index="">商品信息</el-menu-item>
-      <el-menu-item index="">商品管理</el-menu-item>
+      <el-menu-item
+        v-for="menuchild of menuitem.children"
+        :key="menuchild.id"
+        :index="menuchild.url"
+        >{{ menuchild.title }}</el-menu-item
+      >
     </el-submenu>
   </el-menu>
 </template>
 
 <script>
-
 import { mapState } from "vuex";
 export default {
   computed: {
@@ -52,10 +39,17 @@ export default {
   },
   data() {
     return {
+      menuArr: [],
       defaultActive: ""
     };
   },
   mounted() {
+    this.axios({
+      url: "/api/menulist",
+      params: { istree: 1 }
+    }).then(res => {
+      this.menuArr = res.data.list;
+    });
     this.defaultActive = this.$route.meta.selected;
   },
   watch: {
