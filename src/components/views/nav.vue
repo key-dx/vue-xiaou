@@ -32,11 +32,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import store from "../../store";
 export default {
-  computed: {
-    ...mapState(["menuData"])
-  },
   data() {
     return {
       menuArr: [],
@@ -44,12 +41,13 @@ export default {
     };
   },
   mounted() {
-    this.axios({
-      url: "/api/menulist",
-      params: { istree: 1 }
-    }).then(res => {
-      this.menuArr = res.data.list;
-    });
+    // this.axios({
+    //   url: "/api/menulist",
+    //   params: { istree: 1 }
+    // }).then(res => {
+    //   this.menuArr = res.data.list;
+    // });
+    this.menuArr = store.state.userinfo.menus;
     this.defaultActive = this.$route.meta.selected;
   },
   watch: {
@@ -60,7 +58,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 li {
   width: 210px;
 }

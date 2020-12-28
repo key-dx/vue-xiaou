@@ -24,7 +24,7 @@
           node-key="id"
           ref="tree"
           check-strictly
-          :default-expanded-keys='dck'
+          :default-expanded-keys="dck"
           :default-checked-keys="dck"
         >
         </el-tree>
@@ -93,7 +93,11 @@ export default {
       axios.get("/api/roleinfo?id=" + this.$route.params.id).then(res => {
         if (res.data.code == 200) {
           this.form = res.data.list;
-          this.dck = this.form.menus ? this.form.menus.split(",").map(ele=>{ return  parseInt(ele) }) : [];
+          this.dck = this.form.menus
+            ? this.form.menus.split(",").map(ele => {
+                return parseInt(ele);
+              })
+            : [];
         }
       });
     }

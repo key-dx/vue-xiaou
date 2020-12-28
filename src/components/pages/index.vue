@@ -1,7 +1,20 @@
 <template>
   <el-container class="page">
     <el-header>
-      <h1>XX后台管理系统</h1>
+      <h1>
+        <span class="left">
+          小U商城后台管理系统
+        </span>
+        <div class="right">
+          <span>
+            欢迎 :
+            {{ $store.state.userinfo ? $store.state.userinfo.username : "" }}
+          </span>
+          <span @click="logout">
+            退出
+          </span>
+        </div>
+      </h1>
     </el-header>
     <el-container>
       <el-aside width="210px">
@@ -15,12 +28,17 @@
 </template>
 
 <script>
+import store from "../../store";
 import myNav from "../views/nav";
 export default {
   components: {
     myNav
   },
   methods: {
+    logout() {
+      store.state.userinfo = null;
+      this.$router.push("/login");
+    }
   }
 };
 </script>
@@ -31,7 +49,7 @@ export default {
   height: 100vh;
 }
 .el-header {
-  background-color: #3F454B;
+  background-color: #3f454b;
   color: #eee;
   text-align: center;
   line-height: 60px;
@@ -41,5 +59,15 @@ export default {
 }
 .el-main {
   background-color: #fff;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+
+span {
+  cursor: pointer;
 }
 </style>
