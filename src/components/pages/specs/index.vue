@@ -2,17 +2,28 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>管理员列表</el-breadcrumb-item>
+      <el-breadcrumb-item>商品规格列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-row>
-      <el-button type="primary" @click="$router.push('user/add')"
+      <el-button type="primary" @click="$router.push('specs/add')"
         >添加</el-button
       >
     </el-row>
-    <el-table :data="userData" style="width: 100%" stripe border>
-      <el-table-column prop="id" label="管理员编号"> </el-table-column>
-      <el-table-column prop="rolename" label="所属角色"></el-table-column>
-      <el-table-column prop="username" label="管理员名称"></el-table-column>
+    <el-table :data="specsData" style="width: 100%" stripe border>
+      <el-table-column prop="id" label="商品规格编号"> </el-table-column>
+      <el-table-column prop="specsname" label="商品规格名称"></el-table-column>
+      <el-table-column prop="attrs" label="商品规格属性">
+        <template slot-scope="item">
+          <el-tag
+            v-for="attr of item.row.attrs"
+            type="primary"
+            v-show="attr"
+            :key="attr"
+          >
+            {{ attr }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="item">
           <el-tag type="primary" v-show="item.row.status == 1">启用</el-tag>
@@ -25,10 +36,10 @@
         <template slot-scope="item">
           <el-button
             type="primary"
-            @click="$router.push('/user/' + item.row.uid)"
+            @click="$router.push('/specs/' + item.row.id)"
             >编辑</el-button
           >
-          <el-button type="danger" @click="del(item.row.uid)">删除</el-button>
+          <el-button type="danger" @click="del(item.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -47,7 +58,7 @@
 export default {
   data() {
     return {
-      userData: [],
+      specsData: [],
       total: 2,
       size: 2,
       currentPage: 1
@@ -62,12 +73,12 @@ export default {
       })
         .then(() => {
           // 删除菜单数据
-          this.axios.post("/api/userdelete", { uid: uid }).then(res => {
+          this.axios.post("/api/specsdelete", { uid: uid }).then(res => {
             if (res.data.code == 200) {
               if (res.data.list != null) {
-                this.userData = res.data.list;
+                this.specsData = res.data.list;
               } else {
-                this.userData = [];
+                this.specsData = [];
               }
             }
           });
@@ -88,11 +99,14 @@ export default {
         this.currentPage = currentPage;
       }
       this.axios
-        .get("/api/userlist", { size: this.size, page: this.currentPage })
+        .get("/api/specslist", { size: this.size, page: this.currentPage })
         .then(res => {
           if (res.data.code == 200) {
             if (res.data.list != null) {
-              this.userData = res.data.list;
+              this.specsData = res.data.list;
+              // this.specsData.map(ele => {
+              //   return (ele.attrs = ele.attrs.join(","));
+              // });
             }
           }
         });
@@ -102,7 +116,7 @@ export default {
     }
   },
   mounted() {
-    this.axios.get("/api/usercount").then(res => {
+    this.axios.get("/api/specscount").then(res => {
       if (res.data.code == 200) {
         this.total = res.data.list[0].total;
       }
@@ -121,5 +135,8 @@ export default {
 .el-pagination {
   margin-top: 20px;
   float: right;
+}
+.el-tag {
+  margin-right: 10px;
 }
 </style>

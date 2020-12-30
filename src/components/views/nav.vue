@@ -41,12 +41,6 @@ export default {
     };
   },
   mounted() {
-    // this.axios({
-    //   url: "/api/menulist",
-    //   params: { istree: 1 }
-    // }).then(res => {
-    //   this.menuArr = res.data.list;
-    // });
     this.menuArr = store.state.userinfo.menus;
     this.defaultActive = this.$route.meta.selected;
   },

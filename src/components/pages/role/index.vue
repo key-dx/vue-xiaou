@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -55,7 +54,7 @@ export default {
       })
         .then(() => {
           // 删除菜单数据
-          axios.post("/api/roledelete", { id }).then(res => {
+          this.axios.post("/api/roledelete", { id }).then(res => {
             if (res.data.code == 200) {
               if (res.data.list != null) {
                 this.roleData = res.data.list;
@@ -79,7 +78,7 @@ export default {
   },
   mounted() {
     // 页面挂载完成 获取数据
-    axios.get("/api/rolelist").then(res => {
+    this.axios.get("/api/rolelist").then(res => {
       if (res.data.code == 200) {
         if (res.data.list != null) {
           this.roleData = res.data.list;

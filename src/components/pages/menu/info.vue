@@ -58,13 +58,7 @@
 </template>
 
 <script>
-import axios from "axios";
-// import { mapState, mapMutations } from "vuex";
-
 export default {
-  computed: {
-    // ...mapState(["menuData"])
-  },
   data() {
     return {
       tip: "添加",
@@ -100,7 +94,7 @@ export default {
       }
       this.$refs[form].validate(valid => {
         if (valid) {
-          axios.post(url, this.form).then(res => {
+          this.axios.post(url, this.form).then(res => {
             if (res.data.code == 200) {
               this.$router.push("/menu");
             }
@@ -112,16 +106,15 @@ export default {
   mounted() {
     if (this.$route.params.id) {
       this.tip = "修改";
-      axios.get("/api/menuinfo?id=" + this.$route.params.id).then(res => {
-        if (res.data.code == 200) {
-          this.form = res.data.list;
-        }
-      });
+      this.axios
+        .get("/api/menuinfo", { id: this.$route.params.id })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.form = res.data.list;
+          }
+        });
     }
-    axios({
-      url: "/api/menulist",
-      params: { pid: 0 }
-    }).then(res => {
+    this.axios.get("/api/menulist", { pid: 0 }).then(res => {
       this.menuArr = res.data.list;
     });
   }

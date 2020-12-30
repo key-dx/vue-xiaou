@@ -23,6 +23,24 @@ let router = new Router({
         { path: 'user', component: () => import('../components/pages/user/index'), meta: { selected: '/user' } },
         { path: 'user/add', component: () => import('../components/pages/user/info'), meta: { selected: '/user' } },
         { path: 'user/:id', component: () => import('../components/pages/user/info'), meta: { selected: '/user' } },
+        { path: 'cate', component: () => import('../components/pages/cate/index'), meta: { selected: '/cate' } },
+        { path: 'cate/add', component: () => import('../components/pages/cate/info'), meta: { selected: '/cate' } },
+        { path: 'cate/:id', component: () => import('../components/pages/cate/info'), meta: { selected: '/cate' } },
+        { path: 'specs', component: () => import('../components/pages/specs/index'), meta: { selected: '/specs' } },
+        { path: 'specs/add', component: () => import('../components/pages/specs/info'), meta: { selected: '/specs' } },
+        { path: 'specs/:id', component: () => import('../components/pages/specs/info'), meta: { selected: '/specs' } },
+        { path: 'goods', component: () => import('../components/pages/goods/index'), meta: { selected: '/goods' } },
+        { path: 'goods/add', component: () => import('../components/pages/goods/info'), meta: { selected: '/goods' } },
+        { path: 'goods/:id', component: () => import('../components/pages/goods/info'), meta: { selected: '/goods' } },
+        { path: 'member', component: () => import('../components/pages/member/index'), meta: { selected: '/member' } },
+        { path: 'member/add', component: () => import('../components/pages/member/info'), meta: { selected: '/member' } },
+        { path: 'member/:id', component: () => import('../components/pages/member/info'), meta: { selected: '/member' } },
+        { path: 'banner', component: () => import('../components/pages/banner/index'), meta: { selected: '/banner' } },
+        { path: 'banner/add', component: () => import('../components/pages/banner/info'), meta: { selected: '/banner' } },
+        { path: 'banner/:id', component: () => import('../components/pages/banner/info'), meta: { selected: '/banner' } },
+        { path: 'seck', component: () => import('../components/pages/seck/index'), meta: { selected: '/seck' } },
+        { path: 'seck/add', component: () => import('../components/pages/seck/info'), meta: { selected: '/seck' } },
+        { path: 'seck/:id', component: () => import('../components/pages/seck/info'), meta: { selected: '/seck' } },
       ]
     },
     {
@@ -43,15 +61,15 @@ router.beforeEach((to, from, next) => {
       next('/login');
     } else {
       let nowPath = to.meta.selected
-      let allPath = info.menus_url
-      allPath.push('/')
-      allPath.push('/404')
+      var allPath = info.menus_url
+      if (info.menus_url.indexOf('/') == -1) {
+        allPath.push('/')
+      }
       if (allPath.indexOf(nowPath) != -1) {
         next()
       } else {
         next('/')
       }
-
     }
   }
 })

@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -78,7 +77,7 @@ export default {
         : "";
       this.$refs[form].validate(valid => {
         if (valid) {
-          axios.post(url, this.form).then(res => {
+          this.axios.post(url, this.form).then(res => {
             if (res.data.code == 200) {
               this.$router.push("/role");
             }
@@ -90,18 +89,20 @@ export default {
   mounted() {
     if (this.$route.params.id) {
       this.tip = "修改";
-      axios.get("/api/roleinfo?id=" + this.$route.params.id).then(res => {
-        if (res.data.code == 200) {
-          this.form = res.data.list;
-          this.dck = this.form.menus
-            ? this.form.menus.split(",").map(ele => {
-                return parseInt(ele);
-              })
-            : [];
-        }
-      });
+      this.axios
+        .get("/api/roleinfo", { id: this.$route.params.id })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.form = res.data.list;
+            this.dck = this.form.menus
+              ? this.form.menus.split(",").map(ele => {
+                  return parseInt(ele);
+                })
+              : [];
+          }
+        });
     }
-    axios.get("/api/menulist?istree=1").then(res => {
+    this.axios.get("/api/menulist", { istree: 1 }).then(res => {
       if (res.data.code == 200) {
         this.menuArr = res.data.list;
       }

@@ -2,37 +2,30 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>菜单列表</el-breadcrumb-item>
+      <el-breadcrumb-item>商品分类列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-row>
-      <el-button type="primary" @click="$router.push('menu/add')"
+      <el-button type="primary" @click="$router.push('cate/add')"
         >添加</el-button
       >
     </el-row>
     <el-table
-      :data="menuData"
+      :data="cateData"
       style="width: 100%"
       stripe
       border
       row-key="id"
       :tree-props="{ children: 'children' }"
     >
-      <el-table-column prop="id" label="菜单编号" width="80"> </el-table-column>
-      <el-table-column prop="title" label="菜单名称" width="180">
+      <el-table-column prop="id" label="商品分类编号" width="180">
       </el-table-column>
-      <el-table-column prop="type" label="类型" width="180">
+      <el-table-column prop="catename" label="商品分类名称" width="180">
+      </el-table-column>
+      <el-table-column prop="img" label="图片">
         <template slot-scope="item">
-          <el-tag type="primary" v-if="item.row.type == 1">目录</el-tag>
-          <el-tag type="success" v-else>菜单</el-tag>
+          <img v-if="item.row.img" :src="item.row.img" alt="" />
         </template>
       </el-table-column>
-
-      <el-table-column prop="icon" label="菜单图标">
-        <template slot-scope="item">
-          <i v-if="item.row.icon" :class="item.row.icon"></i>
-        </template>
-      </el-table-column>
-      <el-table-column prop="url" label="菜单地址"></el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="item">
           <el-tag type="primary" v-show="item.row.status == 1">启用</el-tag>
@@ -45,7 +38,7 @@
         <template slot-scope="item">
           <el-button
             type="primary"
-            @click="$router.push('/menu/' + item.row.id)"
+            @click="$router.push('/cate/' + item.row.id)"
             >编辑</el-button
           >
           <el-button type="danger" @click="del(item.row.id)">删除</el-button>
@@ -59,7 +52,7 @@
 export default {
   data() {
     return {
-      menuData: []
+      cateData: []
     };
   },
   methods: {
@@ -70,10 +63,10 @@ export default {
         type: "warning"
       })
         .then(() => {
-          // 删除菜单数据
-          this.axios.post("/api/menudelete", { id }).then(res => {
+          // 删除商品分类数据
+          this.axios.post("/api/catedelete", { id }).then(res => {
             if (res.data.code == 200) {
-              this.menuData = res.data.list;
+              this.cateData = res.data.list;
             }
           });
           this.$message({
@@ -91,9 +84,9 @@ export default {
   },
   mounted() {
     // 页面挂载完成 获取数据
-    this.axios.get("/api/menulist", { istree: 1 }).then(res => {
+    this.axios.get("/api/catelist", { istree: 1 }).then(res => {
       if (res.data.code == 200) {
-        this.menuData = res.data.list;
+        this.cateData = res.data.list;
       }
     });
   }
@@ -103,5 +96,8 @@ export default {
 <style scoped>
 .el-row {
   margin: 20px 0;
+}
+.cell img {
+  width: 200px;
 }
 </style>

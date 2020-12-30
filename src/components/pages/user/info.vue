@@ -30,7 +30,7 @@
         <el-input v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password"></el-input>
+        <el-input v-model="form.password" type="password"></el-input>
         <span v-if="this.$route.params.id">不填写密码为不修改密码</span>
       </el-form-item>
       <el-form-item label="状态">
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -78,10 +77,9 @@ export default {
         url = "/api/useredit";
         this.form.uid = this.$route.params.id;
       }
-
       this.$refs[form].validate(valid => {
         if (valid) {
-          axios.post(url, this.form).then(res => {
+          this.axios.post(url, this.form).then(res => {
             if (res.data.code == 200) {
               this.$router.push("/user");
             }
@@ -93,14 +91,16 @@ export default {
   mounted() {
     if (this.$route.params.id) {
       this.tip = "修改";
-      axios.get("/api/userinfo?uid=" + this.$route.params.id).then(res => {
-        if (res.data.code == 200) {
-          this.form = res.data.list;
-          this.form.password = "";
-        }
-      });
+      this.axios
+        .get("/api/userinfo", { uid: this.$route.params.id })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.form = res.data.list;
+            this.form.password = "";
+          }
+        });
     }
-    axios.get("/api/rolelist").then(res => {
+    this.axios.get("/api/rolelist").then(res => {
       if (res.data.code == 200) {
         this.roleArr = res.data.list;
       }

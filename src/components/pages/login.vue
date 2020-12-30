@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import store from "../../store";
 export default {
   data() {
@@ -50,7 +51,7 @@ export default {
     submitForm() {
       this.$refs.userinfo.validate(valid => {
         if (valid) {
-          this.axios.post("/api/userlogin", this.userinfo).then(res => {
+          axios.post("/api/userlogin", this.userinfo).then(res => {
             if (res.data.code == 200) {
               // localStorage.setItem("username", this.userinfo.username);
               // store

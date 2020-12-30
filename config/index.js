@@ -10,10 +10,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable:{
-      '/api':{
-        target:"http://localhost:3000",
-        changeOrigin:true,//允许跨域
+    proxyTable: {
+      '/api': {
+        target: "http://localhost:3000",
+        changeOrigin: true,//允许跨域
+        // pathRewrite:{
+        //   '^/关键词':'要替换成的内容'
+        // }
+      },
+      '/uploads': {
+        target: "http://localhost:3000",
+        changeOrigin: true,//允许跨域
         // pathRewrite:{
         //   '^/关键词':'要替换成的内容'
         // }
@@ -27,7 +34,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

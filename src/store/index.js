@@ -20,7 +20,6 @@ var store = new Vuex.Store({
   actions: {
     setUserinfoSync(context, data) {
       context.commit('setUserinfo', data)
-
     }
   },
   plugins: [createPersistedState()],
