@@ -18,7 +18,7 @@
       </el-table-column>
       <el-table-column prop="endtime" label="结束时间">
         <template slot-scope="item">
-          <el-tag>{{ item.row.begintime | formatTime  }}</el-tag>
+          <el-tag>{{ item.row.endtime | formatTime }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="status" label="状态">
