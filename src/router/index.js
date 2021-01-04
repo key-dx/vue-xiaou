@@ -14,6 +14,7 @@ let router = new Router({
       component: () => import('../components/pages/index'),
       meta: { selected: '/' },
       children: [
+        { path: 'home', component: () => import('../components/pages/home'), meta: { selected: '/home' } },
         { path: 'menu', component: () => import('../components/pages/menu/index'), meta: { selected: '/menu' } },
         { path: 'menu/add', component: () => import('../components/pages/menu/info'), meta: { selected: '/menu' } },
         { path: 'menu/:id', component: () => import('../components/pages/menu/info'), meta: { selected: '/menu' } },
@@ -64,6 +65,7 @@ router.beforeEach((to, from, next) => {
       var allPath = info.menus_url
       if (info.menus_url.indexOf('/') == -1) {
         allPath.push('/')
+        allPath.push('/home')
       }
       if (allPath.indexOf(nowPath) != -1) {
         next()

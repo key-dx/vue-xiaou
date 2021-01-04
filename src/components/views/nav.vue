@@ -8,7 +8,7 @@
     unique-opened
     router
   >
-    <el-menu-item index="/">
+    <el-menu-item index="/home">
       <i class="el-icon-menu"></i>
       <span>首页</span>
     </el-menu-item>
