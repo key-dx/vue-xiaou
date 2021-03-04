@@ -12,16 +12,16 @@ export default {
     // 绘制图表
     myChart.setOption({
       title: {
-        text: "常用英雄"
+        text: "近一周访问人数"
       },
       tooltip: {},
       xAxis: {
-        data: ["诺手", "鳄鱼", "乌鸦", "奥恩", "俄洛伊", "石头人"]
+        data: ["3.2", "3.3", "3.4", "3.5", "3.6", "3.7"]
       },
       yAxis: {},
       series: [
         {
-          name: "场次",
+          name: "人数",
           type: "bar",
           data: [456, 220, 136, 30, 50, 300]
         }

@@ -84,7 +84,6 @@ export default {
   },
   filters: {
     formatTime: function(time) {
-      console.log(time);
       let start = moment(Number(time)).format("YYYY-MM-DD hh:mm:ss");
       return start;
     }

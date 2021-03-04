@@ -13,6 +13,7 @@ let router = new Router({
       path: '/',
       component: () => import('../components/pages/index'),
       meta: { selected: '/' },
+      redirect:'/home',
       children: [
         { path: 'home', component: () => import('../components/pages/home'), meta: { selected: '/home' } },
         { path: 'menu', component: () => import('../components/pages/menu/index'), meta: { selected: '/menu' } },

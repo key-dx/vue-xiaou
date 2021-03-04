@@ -164,7 +164,7 @@ export default {
       rules: {
         goodsname: [
           { required: true, message: "请输入商品管理名称", trigger: "blur" },
-          { min: 1, max: 9, message: "长度在 1 到 9 个字符", trigger: "blur" }
+          { min: 1, max: 20, message: "长度在 1 到 9 个字符", trigger: "blur" }
         ],
         first_cateid: [
           { required: true, message: "请选择商品管理层级", trigger: "change" }

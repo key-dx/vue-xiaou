@@ -58,7 +58,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品">
-        <el-select v-model="form.goodsid" placeholder="请选择商品">
+        <el-select v-model="form.goodsid" placeholder="请选择商品" multiple>
           <el-option
             v-for="(item, index) of goodsArr"
             :key="index"
@@ -85,7 +85,6 @@
 export default {
   data() {
     return {
-      itemArr: [{ value: "" }],
       tip: "添加",
       form: {
         title: "",
@@ -101,9 +100,6 @@ export default {
           { required: true, message: "请输入活动名称", trigger: "blur" },
           { min: 1, max: 9, message: "长度在 1 到 9 个字符", trigger: "blur" }
         ]
-      },
-      pickerOptions: {
-        shortcuts: []
       },
       value2: [],
       // 分类
@@ -156,16 +152,18 @@ export default {
         .get("/api/seckinfo", { id: this.$route.params.id })
         .then(res => {
           if (res.data.code == 200) {
-            console.log(res.data.list);
+            // console.log(res.data.list);
             this.form = res.data.list;
             this.value2.push(Number(this.form.begintime));
             this.value2.push(Number(this.form.endtime));
             let a = this.form.second_cateid;
-            let c = this.form.goodsid;
+            let c = this.form.goodsid.split(",").map(ele => {
+              return Number(ele);
+            });
             this.changeFirst(this.form.first_cateid);
             this.form.second_cateid = a;
             this.changegoods(this.form.second_cateid);
-            this.form.goodsid = Number(c);
+            this.form.goodsid = c;
           }
         });
     }

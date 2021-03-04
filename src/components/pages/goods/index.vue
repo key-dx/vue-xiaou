@@ -82,7 +82,7 @@ export default {
     return {
       goodsData: [],
       total: 2,
-      size: 2,
+      size:4,
       currentPage: 1
     };
   },
