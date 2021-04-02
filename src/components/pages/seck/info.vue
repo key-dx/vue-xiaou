@@ -152,7 +152,6 @@ export default {
         .get("/api/seckinfo", { id: this.$route.params.id })
         .then(res => {
           if (res.data.code == 200) {
-            // console.log(res.data.list);
             this.form = res.data.list;
             this.value2.push(Number(this.form.begintime));
             this.value2.push(Number(this.form.endtime));
@@ -162,8 +161,11 @@ export default {
             });
             this.changeFirst(this.form.first_cateid);
             this.form.second_cateid = a;
+            console.log(a);
             this.changegoods(this.form.second_cateid);
             this.form.goodsid = c;
+            console.log(c);
+
           }
         });
     }

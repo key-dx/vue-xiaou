@@ -11,15 +11,15 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: "http://localhost:3000",
-        changeOrigin: true,//允许跨域
-        // pathRewrite:{
-        //   '^/关键词':'要替换成的内容'
-        // }
-      },
+      // '/api': {
+      //   target: "http://82.156.74.86:3000",
+      //   changeOrigin: true,//允许跨域
+      //   // pathRewrite:{
+      //   //   '^/关键词':'要替换成的内容'
+      //   // }
+      // },
       '/uploads': {
-        target: "http://localhost:3000",
+        target: "http://82.156.74.86:3000",
         changeOrigin: true,//允许跨域
         // pathRewrite:{
         //   '^/关键词':'要替换成的内容'

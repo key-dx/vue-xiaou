@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '../../store'
-
+axios.defaults.baseURL="http://82.156.74.86:3000";
 function get(url, params = {}) {
   return new Promise((reslove, reject) => {
     axios({
